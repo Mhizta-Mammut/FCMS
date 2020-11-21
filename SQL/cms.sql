@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2018 at 05:49 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Nov 21, 2020 at 03:02 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `updationDate`) VALUES
-(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', '18-10-2016 04:18:16');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '18-10-2016 04:18:16');
 
 -- --------------------------------------------------------
 
@@ -61,8 +61,19 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `categoryName`, `categoryDescription`, `creationDate`, `updationDate`) VALUES
-(1, 'E-commerce', 'E-commerce', '2017-03-28 07:10:55', ''),
-(2, 'general', 'dsdas', '2017-06-11 10:54:06', '');
+(1, 'About Faculty', 'Faculty of the great versity\r\n', '2017-03-28 07:10:55', '15-10-2020 10:34:21 PM'),
+(2, 'General Complaint', 'This is general complaint category', '2017-06-11 10:54:06', '15-10-2020 10:36:00 PM'),
+(3, 'Exam ', 'Complaints relating to exam', '2020-10-27 12:23:18', NULL),
+(4, 'Course Registration', 'Complaints on Course Registration', '2020-10-27 12:23:59', NULL),
+(5, 'Result Compilation', 'Complaints relating to result compilation', '2020-10-27 12:25:35', NULL),
+(6, 'Students Welfare', 'Complaints relating to students wellfare', '2020-10-27 12:26:56', NULL),
+(7, 'Students-Lecturers Relationship', 'Complaints relating to Students and Lecturers Relationship', '2020-10-27 12:28:14', NULL),
+(8, 'Research Projects', 'Complaints relating to research projects', '2020-10-27 12:29:27', NULL),
+(9, 'Lecturers', 'Complaints relating to Lecturers', '2020-10-27 12:30:31', NULL),
+(10, 'School Fees', 'Complaints relating to school fees', '2020-10-27 12:31:14', NULL),
+(11, 'Sports', 'Complaints Relating to extra curricular activities', '2020-10-27 12:32:24', NULL),
+(12, 'University Policy', 'Complaints against University policy', '2020-10-27 12:33:18', NULL),
+(13, 'Public', 'Complaints from the public', '2020-10-27 12:34:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -87,31 +98,9 @@ INSERT INTO `complaintremark` (`id`, `complaintNumber`, `status`, `remark`, `rem
 (2, 9, 'in process', 'hiiiiiiiiiiiiiiiiiiii', '2017-04-01 18:37:59'),
 (3, 3, 'in process', 'test', '2017-05-02 15:57:43'),
 (4, 19, 'closed', 'case solved', '2017-06-11 11:18:33'),
-(5, 1, 'closed', 'This sample text for testing', '2018-09-05 17:08:26');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `state`
---
-
-CREATE TABLE `state` (
-  `id` int(11) NOT NULL,
-  `stateName` varchar(255) NOT NULL,
-  `stateDescription` tinytext NOT NULL,
-  `postingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updationDate` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `state`
---
-
-INSERT INTO `state` (`id`, `stateName`, `stateDescription`, `postingDate`, `updationDate`) VALUES
-(3, 'Uttar Pradesh', '', '2016-10-18 11:35:02', ''),
-(4, 'Punjab', 'pbPB', '2016-10-18 11:35:58', '28-03-2017 03:40:02 PM'),
-(5, 'Haryana', 'Haryana', '2017-03-28 07:20:36', ''),
-(6, 'fsdfs', 'fsdf', '2017-06-11 10:54:12', '');
+(5, 1, 'closed', 'This sample text for testing', '2018-09-05 17:08:26'),
+(6, 2, 'in process', 'we will see what we can do about it', '2020-10-24 15:52:53'),
+(7, 11, 'closed', 'We will make sure everything works fine.', '2020-10-28 11:31:49');
 
 -- --------------------------------------------------------
 
@@ -132,8 +121,11 @@ CREATE TABLE `subcategory` (
 --
 
 INSERT INTO `subcategory` (`id`, `categoryid`, `subcategory`, `creationDate`, `updationDate`) VALUES
-(1, 1, 'Online SHopping', '2017-03-28 07:11:07', ''),
-(2, 1, 'E-wllaet', '2017-03-28 07:11:20', '');
+(2, 1, 'something goes here', '2017-03-28 07:11:20', '15-10-2020 10:37:14 PM'),
+(3, 3, 'Exam Malpractice', '2020-10-27 12:35:04', NULL),
+(4, 3, 'Exam Timetable', '2020-10-27 12:35:19', NULL),
+(5, 3, 'Exams Clashing', '2020-10-27 12:35:45', NULL),
+(6, 1, 'About Sub', '2020-10-27 12:55:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -147,7 +139,6 @@ CREATE TABLE `tblcomplaints` (
   `category` int(11) NOT NULL,
   `subcategory` varchar(255) NOT NULL,
   `complaintType` varchar(255) NOT NULL,
-  `state` varchar(255) NOT NULL,
   `noc` varchar(255) NOT NULL,
   `complaintDetails` mediumtext NOT NULL,
   `complaintFile` varchar(255) DEFAULT NULL,
@@ -160,29 +151,30 @@ CREATE TABLE `tblcomplaints` (
 -- Dumping data for table `tblcomplaints`
 --
 
-INSERT INTO `tblcomplaints` (`complaintNumber`, `userId`, `category`, `subcategory`, `complaintType`, `state`, `noc`, `complaintDetails`, `complaintFile`, `regDate`, `status`, `lastUpdationDate`) VALUES
-(1, 1, 1, 'E-wllaet', 'General Query', 'Punjab', 'test demo', 'test demo test demo test demotest demotest demotest demotest demotest demotest demotest demotest demo', NULL, '2017-03-30 16:52:40', 'closed', '2018-09-05 17:08:27'),
-(2, 1, 1, 'Online SHopping', 'General Query', 'Punjab', 'testing', 'sample text for demo', '', '2017-03-30 17:05:56', 'in process', '2017-04-01 17:29:19'),
-(3, 1, 1, 'Online SHopping', ' Complaint', 'Punjab', 'ferwekt lwentgwewt', 'wetwetwe', '', '2017-03-30 17:07:51', 'in process', '2017-05-02 15:57:43'),
-(4, 1, 1, 'E-wllaet', 'General Query', 'Haryana', 'lkdlsfklsdf', 'fdsf,msd,f  f f', '2. Compendium Selected Paper.doc', '2017-03-30 17:13:14', 'closed', '2017-03-31 16:06:22'),
-(5, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:14:55', NULL, '0000-00-00 00:00:00'),
-(6, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:20:16', NULL, '0000-00-00 00:00:00'),
-(7, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:20:56', NULL, '0000-00-00 00:00:00'),
-(8, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:23:05', NULL, '0000-00-00 00:00:00'),
-(9, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:25:09', 'in process', '2017-04-01 18:38:00'),
-(10, 1, 1, 'E-wllaet', ' Complaint', 'Punjab', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:27:24', NULL, '0000-00-00 00:00:00'),
-(11, 1, 1, 'Online SHopping', 'General Query', 'Haryana', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:36:32', NULL, '0000-00-00 00:00:00'),
-(12, 1, 1, 'Online SHopping', 'General Query', 'Haryana', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:37:09', NULL, '0000-00-00 00:00:00'),
-(13, 1, 1, 'Online SHopping', 'General Query', 'Haryana', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:39:57', NULL, '0000-00-00 00:00:00'),
-(14, 1, 1, 'Online SHopping', ' Complaint', 'Haryana', 'vcxvxcvxcv', 'cvcx', 'doctorslog.sql', '2017-03-30 17:41:19', NULL, '0000-00-00 00:00:00'),
-(15, 1, 1, 'E-wllaet', 'General Query', 'Punjab', 'dsfsd', 'fsdfsdf', '', '2017-03-30 17:42:38', NULL, '0000-00-00 00:00:00'),
-(16, 1, 1, 'E-wllaet', 'General Query', 'Punjab', 'dsfsd', 'fsdfsdf', '', '2017-03-31 01:54:07', NULL, '0000-00-00 00:00:00'),
-(17, 5, 1, 'E-wllaet', ' Complaint', 'fsdfs', 'regarding refund', 'test test', '', '2017-06-11 10:57:49', NULL, '0000-00-00 00:00:00'),
-(18, 5, 1, 'Online SHopping', ' Complaint', 'Uttar Pradesh', 'yhytr', 'rtytry', 'About Us.docx', '2017-06-11 11:08:47', NULL, '0000-00-00 00:00:00'),
-(19, 6, 1, 'Online SHopping', ' Complaint', 'Uttar Pradesh', 'regarding refund', 'Test@123 dfds fsd fs gs gsd g sg g g sgstwerwe ewtw tw', 'About Us.docx', '2017-06-11 11:15:24', 'closed', '2017-06-11 11:18:33'),
-(20, 1, 1, 'E-wllaet', 'General Query', 'fsdfs', 'sdgsdg', 'gdgsdgsd', '', '2018-05-24 18:26:23', NULL, '0000-00-00 00:00:00'),
-(21, 1, 1, 'Online SHopping', 'General Query', 'Uttar Pradesh', 'csdf', 'fsdfs', '', '2018-05-24 18:26:55', NULL, '0000-00-00 00:00:00'),
-(22, 1, 1, 'Online SHopping', 'General Query', 'Uttar Pradesh', 'csdf', 'fsdfs', '', '2018-05-24 18:27:02', NULL, '0000-00-00 00:00:00');
+INSERT INTO `tblcomplaints` (`complaintNumber`, `userId`, `category`, `subcategory`, `complaintType`, `noc`, `complaintDetails`, `complaintFile`, `regDate`, `status`, `lastUpdationDate`) VALUES
+(1, 1, 1, 'E-wllaet', 'General Query', 'test demo', 'test demo test demo test demotest demotest demotest demotest demotest demotest demotest demotest demo', NULL, '2017-03-30 16:52:40', 'closed', '2018-09-05 17:08:27'),
+(2, 1, 1, 'Online SHopping', 'General Query', 'testing', 'sample text for demo', '', '2017-03-30 17:05:56', 'in process', '2017-04-01 17:29:19'),
+(3, 1, 1, 'Online SHopping', ' Complaint', 'ferwekt lwentgwewt', 'wetwetwe', '', '2017-03-30 17:07:51', 'in process', '2017-05-02 15:57:43'),
+(4, 1, 1, 'E-wllaet', 'General Query', 'lkdlsfklsdf', 'fdsf,msd,f  f f', '2. Compendium Selected Paper.doc', '2017-03-30 17:13:14', 'closed', '2017-03-31 16:06:22'),
+(5, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:14:55', NULL, '0000-00-00 00:00:00'),
+(6, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:20:16', NULL, '0000-00-00 00:00:00'),
+(7, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:20:56', NULL, '0000-00-00 00:00:00'),
+(8, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:23:05', NULL, '0000-00-00 00:00:00'),
+(9, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:25:09', 'in process', '2017-04-01 18:38:00'),
+(10, 1, 1, 'E-wllaet', ' Complaint', 'bgfhfgh', 'hfghfgh', '1 (3).jpg', '2017-03-30 17:27:24', NULL, '0000-00-00 00:00:00'),
+(11, 1, 1, 'Online SHopping', 'General Query', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:36:32', 'closed', '2020-10-28 11:31:49'),
+(12, 1, 1, 'Online SHopping', 'General Query', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:37:09', NULL, '0000-00-00 00:00:00'),
+(13, 1, 1, 'Online SHopping', 'General Query', 'dsflsdlflsdf', 'fsdfsdfsdf', 'avatar-1.jpg.png', '2017-03-30 17:39:57', NULL, '0000-00-00 00:00:00'),
+(14, 1, 1, 'Online SHopping', ' Complaint', 'vcxvxcvxcv', 'cvcx', 'doctorslog.sql', '2017-03-30 17:41:19', NULL, '0000-00-00 00:00:00'),
+(15, 1, 1, 'E-wllaet', 'General Query', 'dsfsd', 'fsdfsdf', '', '2017-03-30 17:42:38', NULL, '0000-00-00 00:00:00'),
+(16, 1, 1, 'E-wllaet', 'General Query', 'dsfsd', 'fsdfsdf', '', '2017-03-31 01:54:07', NULL, '0000-00-00 00:00:00'),
+(17, 5, 1, 'E-wllaet', ' Complaint', 'regarding refund', 'test test', '', '2017-06-11 10:57:49', NULL, '0000-00-00 00:00:00'),
+(18, 5, 1, 'Online SHopping', ' Complaint', 'yhytr', 'rtytry', 'About Us.docx', '2017-06-11 11:08:47', NULL, '0000-00-00 00:00:00'),
+(19, 6, 1, 'Online SHopping', ' Complaint', 'regarding refund', 'Test@123 dfds fsd fs gs gsd g sg g g sgstwerwe ewtw tw', 'About Us.docx', '2017-06-11 11:15:24', 'closed', '2017-06-11 11:18:33'),
+(20, 1, 1, 'E-wllaet', 'General Query', 'sdgsdg', 'gdgsdgsd', '', '2018-05-24 18:26:23', NULL, '0000-00-00 00:00:00'),
+(21, 1, 1, 'Online SHopping', 'General Query', 'csdf', 'fsdfs', '', '2018-05-24 18:26:55', NULL, '0000-00-00 00:00:00'),
+(22, 1, 1, 'Online SHopping', 'General Query', 'csdf', 'fsdfs', '', '2018-05-24 18:27:02', NULL, '0000-00-00 00:00:00'),
+(23, 2, 2, 'ooooo', ' Complaint', 'A', 'QEQEEERKW;LERLKWPEOTKPOWETOERKO', '', '2020-10-23 13:09:57', NULL, '2020-10-28 11:20:26');
 
 -- --------------------------------------------------------
 
@@ -205,31 +197,16 @@ CREATE TABLE `userlog` (
 --
 
 INSERT INTO `userlog` (`id`, `uid`, `username`, `userip`, `loginTime`, `logout`, `status`) VALUES
-(1, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-03-28 17:04:36', '', 1),
-(2, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-03-29 15:02:26', '', 1),
-(3, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-03-30 14:58:00', '', 1),
-(4, 0, 'dsad', 0x3a3a3100000000000000000000000000, '2017-03-31 17:39:07', '', 0),
-(5, 0, 'dwerwer', 0x3a3a3100000000000000000000000000, '2017-03-31 17:41:22', '', 0),
-(6, 0, 'ffert', 0x3a3a3100000000000000000000000000, '2017-03-31 17:41:29', '', 0),
-(7, 0, 'ewrwe', 0x3a3a3100000000000000000000000000, '2017-03-31 17:42:12', '', 0),
-(8, 0, 'ewrwe', 0x3a3a3100000000000000000000000000, '2017-03-31 17:47:51', '', 0),
-(9, 0, 'ewrwe', 0x3a3a3100000000000000000000000000, '2017-03-31 17:47:54', '', 0),
-(10, 0, 'fsdfsdff', 0x3a3a3100000000000000000000000000, '2017-03-31 17:48:11', '', 0),
-(11, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-03-31 17:49:25', '', 1),
-(12, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-04-01 18:52:35', '02-04-2017 12:24:41 AM', 1),
-(13, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-04-01 18:58:09', '02-04-2017 12:50:42 AM', 1),
-(14, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-04-01 19:38:15', '02-04-2017 01:08:19 AM', 1),
-(15, 0, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-04-02 18:50:20', '', 0),
-(16, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-04-02 18:50:28', '03-04-2017 12:26:50 AM', 1),
-(17, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2017-05-02 18:01:26', '', 1),
-(18, 0, 'test@gm.com', 0x3a3a3100000000000000000000000000, '2017-06-11 10:48:50', '', 0),
-(19, 5, 'abc@abc.com', 0x3a3a3100000000000000000000000000, '2017-06-11 10:56:30', '11-06-2017 04:39:15 PM', 1),
-(20, 6, 'xyz@xyz.com', 0x3a3a3100000000000000000000000000, '2017-06-11 11:13:28', '11-06-2017 04:45:46 PM', 1),
-(21, 6, 'xyz@xyz.com', 0x3a3a3100000000000000000000000000, '2017-06-11 11:19:45', '11-06-2017 04:50:02 PM', 1),
-(22, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2018-05-24 18:26:07', '', 1),
-(23, 0, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2018-09-05 17:05:22', '', 0),
-(24, 0, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2018-09-05 17:05:32', '', 0),
-(25, 1, 'anuj.lpu1@gmail.com', 0x3a3a3100000000000000000000000000, '2018-09-05 17:07:12', '', 1);
+(1, 0, 'admin', 0x3a3a3100000000000000000000000000, '2020-10-16 06:08:45', '', 0),
+(2, 0, 'admin', 0x3a3a3100000000000000000000000000, '2020-10-16 06:13:48', '', 0),
+(3, 1, 'mhizta.mammut@gmail.com', 0x3a3a3100000000000000000000000000, '2020-10-16 06:14:08', '', 1),
+(4, 0, 'admin', 0x3a3a3100000000000000000000000000, '2020-10-17 12:02:47', '', 0),
+(5, 2, 'm@m.m', 0x3a3a3100000000000000000000000000, '2020-10-17 12:05:13', '17-10-2020 08:01:35 PM', 1),
+(6, 0, 'admin', 0x3a3a3100000000000000000000000000, '2020-10-22 21:47:14', '', 0),
+(7, 2, 'm@m.m', 0x3a3a3100000000000000000000000000, '2020-10-22 21:56:03', '', 1),
+(8, 2, 'm@m.m', 0x3a3a3100000000000000000000000000, '2020-10-23 11:43:12', '', 1),
+(9, 2, 'm@m.m', 0x3a3a3100000000000000000000000000, '2020-10-23 12:41:12', '23-10-2020 06:58:17 PM', 1),
+(10, 2, 'm@m.m', 0x3a3a3100000000000000000000000000, '2020-10-28 11:12:05', '28-10-2020 12:30:21 PM', 1);
 
 -- --------------------------------------------------------
 
@@ -239,14 +216,11 @@ INSERT INTO `userlog` (`id`, `uid`, `username`, `userip`, `loginTime`, `logout`,
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `regNo` varchar(255) DEFAULT NULL,
   `fullName` varchar(255) DEFAULT NULL,
   `userEmail` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `contactNo` bigint(11) DEFAULT NULL,
-  `address` tinytext,
-  `State` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `pincode` int(6) DEFAULT NULL,
   `userImage` varchar(255) DEFAULT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updationDate` timestamp NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
@@ -257,8 +231,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullName`, `userEmail`, `password`, `contactNo`, `address`, `State`, `country`, `pincode`, `userImage`, `regDate`, `updationDate`, `status`) VALUES
-(1, 'Anuj Kumar', 'anuj.lpu1@gmail.com', 'f925916e2754e5e03f75dd58a5733251', 9999857860, 'Shakarpur', 'Uttar Pradesh', 'India', 110092, NULL, '2017-03-28 11:44:52', '2017-04-01 19:37:42', 1);
+INSERT INTO `users` (`id`, `regNo`, `fullName`, `userEmail`, `password`, `contactNo`, `userImage`, `regDate`, `updationDate`, `status`) VALUES
+(1, '', 'Mhizta Mammut', 'mhizta.mammut@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 9999857860, NULL, '2017-03-28 11:44:52', '2020-10-24 15:53:46', 1),
+(2, NULL, 'Muhammad Hamisu', 'm@m.m', '827ccb0eea8a706c4c34a16891f84e7b', 809970355, '4f84011c42f9aa4241890a1f2b386504.png', '2020-10-17 12:04:56', '2020-10-17 14:30:20', 1);
 
 --
 -- Indexes for dumped tables
@@ -280,12 +255,6 @@ ALTER TABLE `category`
 -- Indexes for table `complaintremark`
 --
 ALTER TABLE `complaintremark`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `state`
---
-ALTER TABLE `state`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -326,43 +295,37 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `complaintremark`
 --
 ALTER TABLE `complaintremark`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `state`
---
-ALTER TABLE `state`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tblcomplaints`
 --
 ALTER TABLE `tblcomplaints`
-  MODIFY `complaintNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `complaintNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
